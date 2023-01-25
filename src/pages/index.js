@@ -1,7 +1,8 @@
 import React from "react";
 import { Product, FooterBanner, HeroBanner } from "../../components";
+import { client } from "../../lib/client";
 
-const Home = () => {
+const Home = ({ allProducts, allBanners }) => {
   return (
     <>
       <HeroBanner />
@@ -10,11 +11,23 @@ const Home = () => {
         <p>Speakers of many variations</p>
       </div>
       <div className="products-container">
-        {["product1, product2, product3"].map((p) => p)}
+        {allProducts?.map((product) => product.name)}
       </div>
       <FooterBanner />
     </>
   );
+};
+
+export const getServerSideProps = async () => {
+  const allProductsQuery = '*[_type == "product"]';
+  const allProducts = await client.fetch(allProductsQuery);
+
+  const allBannersQuery = '*[_type == "banner"]';
+  const allBanners = await client.fetch(allBannersQuery);
+
+  return {
+    props: { allProducts, allBanners },
+  };
 };
 
 export default Home;
