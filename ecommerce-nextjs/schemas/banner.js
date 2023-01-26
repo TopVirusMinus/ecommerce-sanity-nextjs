@@ -20,17 +20,17 @@ export default defineType({
     }),
     defineField({
       name: 'product',
-      title: 'المنتج',
+      title: 'اسم المنتج',
+      type: 'string',
+    }),
+    defineField({
+      name: 'smallText',
+      title: '',
       type: 'string',
     }),
     defineField({
       name: 'desc',
       title: 'وصف المنتج',
-      type: 'string',
-    }),
-    defineField({
-      name: 'smallText',
-      title: 'كتابه صغيره',
       type: 'string',
     }),
     defineField({
