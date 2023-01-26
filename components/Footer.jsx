@@ -54,7 +54,7 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className="grid grid-cols-1 gap-8 pt-8 border-t border-gray-100 sm:grid-cols-2 lg:grid-cols-4 lg:pt-16">
+        <div className="grid grid-cols-1 gap-8 pt-1 border-gray-100 sm:grid-cols-2 lg:grid-cols-4 lg:pt-1">
           <div>
             <p className="font-medium text-gray-900">Services</p>
 
