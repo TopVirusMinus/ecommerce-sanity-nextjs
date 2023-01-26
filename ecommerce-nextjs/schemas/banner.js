@@ -40,22 +40,7 @@ export default defineType({
     }),
     defineField({
       name: 'largeText1',
-      title: 'كتابه كبيره 1',
-      type: 'string',
-    }),
-    defineField({
-      name: 'largeText2',
-      title: 'كتابه كبيره 2',
-      type: 'string',
-    }),
-    defineField({
-      name: 'discount',
       title: 'التخفيض',
-      type: 'string',
-    }),
-    defineField({
-      name: 'saleTime',
-      title: 'مده التخفيض',
       type: 'string',
     }),
   ],
