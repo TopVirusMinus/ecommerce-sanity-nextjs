@@ -6,6 +6,7 @@ import {
   AiOutlinePlus,
   AiFillStar,
   AiOutlineStar,
+  AiOutlineHeart,
 } from "react-icons/ai";
 import Product from "../../../components/Product";
 import { useState } from "react";
@@ -82,9 +83,13 @@ const ProductDetails = ({ product, products }) => {
               Add to Cart
             </button>
             <button type="button" className="buy-now">
-              Add to Whishlist
+              Buy now
             </button>
           </div>
+          <button className="add-to-wishlist">
+            &hearts;
+            <span> Add to Wishlist</span>
+          </button>
         </div>
       </div>
 
