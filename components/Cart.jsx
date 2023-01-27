@@ -100,9 +100,7 @@ const Cart = () => {
                         >
                           <AiOutlineMinus />
                         </span>
-                        <span className="num" onClick="">
-                          {item.quantity}
-                        </span>
+                        <span className="num">{item.quantity}</span>
                         <span
                           className="plus"
                           onClick={() =>
@@ -132,7 +130,7 @@ const Cart = () => {
               <h3>EGP {totalPrice}</h3>
             </div>
             <div className="btn-container">
-              <button type="button" className="btn" onClick="">
+              <button type="button" className="btn" onClick={() => 1}>
                 Pay On Delivery
               </button>
               <button type="button" className="btn" onClick={handleCheckout}>
