@@ -1,10 +1,12 @@
+Deployed Website: https://ecommerce-sanity-nextjs-coral.vercel.app/
+![Screenshot_4](https://user-images.githubusercontent.com/40539669/215258866-bf7a71a1-4396-40d3-bb08-f8c0ad81d5e9.png)
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
 First, run the development server:
-
-https://ecommerce-sanity-nextjs-coral.vercel.app/
 
 ```bash
 npm run dev
