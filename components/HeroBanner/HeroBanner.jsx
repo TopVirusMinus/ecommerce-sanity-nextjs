@@ -19,7 +19,7 @@ const HeroBanner = ({ banner }) => {
           height={555}
         />
         <div>
-          <Link href="/product/ID">
+          <Link href={`/product/ID`}>
             <button type="button">{banner.buttonText}</button>
           </Link>
           <div className={Styles.desc}>
