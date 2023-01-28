@@ -1,7 +1,7 @@
 import React from "react";
 import { Product, FooterBanner, HeroBanner } from "../../components";
 import { client } from "../../lib/client";
-
+import Styles from "../styles/index.module.css";
 const Home = ({ allProducts, allBanners }) => {
   // console.log("allProducts ", allProducts);
   // console.log("allBanners ", allBanners);
@@ -9,11 +9,11 @@ const Home = ({ allProducts, allBanners }) => {
   return (
     <>
       <HeroBanner banner={allBanners.length && allBanners[0]} />
-      <div className="products-heading">
+      <div className={Styles.products_heading}>
         <h2>Best Selling Headphones</h2>
         <p>Speakers of many variations</p>
       </div>
-      <div className="products-container">
+      <div className={Styles.products_container}>
         {allProducts?.map((product) => (
           <Product key={product._id} product={product} />
         ))}
