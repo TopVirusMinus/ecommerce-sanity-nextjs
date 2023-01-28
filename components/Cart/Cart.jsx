@@ -45,27 +45,29 @@ const Cart = () => {
   };
 
   return (
-    <div className="cart-wrapper" ref={cartRef}>
-      <div className="cart-container">
+    <div className={Styles.cart_wrapper} ref={cartRef}>
+      <div className={Styles.cart_container}>
         <button
           type="button"
-          className="cart-heading"
+          className={Styles.cart_heading}
           onClick={() => setShowCart(false)}
         >
           <AiOutlineLeft />
-          <span className="heading">Your Cart</span>
-          <span className="cart-num-items">({totalQuantities} items)</span>
+          <span className={Styles.heading}>Your Cart</span>
+          <span className={Styles.cart_num_items}>
+            ({totalQuantities} items)
+          </span>
         </button>
 
         {cartItems.length < 1 && (
-          <div className="empty-cart">
+          <div className={Styles.empty_cart}>
             <AiOutlineShopping size={150} />
             <h3>Your shopping bag is empty</h3>
             <Link href="/">
               <button
                 type="button"
                 onClick={() => setShowCart(false)}
-                className="btn"
+                className={Styles.btn}
               >
                 Continue Shopping
               </button>
@@ -73,23 +75,23 @@ const Cart = () => {
           </div>
         )}
 
-        <div className="product-container">
+        <div className={Styles.product_container}>
           {cartItems.length >= 1 &&
             cartItems.map((item) => (
-              <div className="product" key={item._id}>
+              <div className={Styles.product} key={item._id}>
                 <Image
                   src={urlFor(item?.image[0]).url()}
-                  className="cart-product-image"
+                  className={Styles.cart_product_image}
                   alt="product"
                   width={250}
                   height={250}
                 />
-                <div className="item-desc">
-                  <div className="flex top">
+                <div className={Styles.item_desc}>
+                  <div className={`${Styles.flex} ${Styles.top}`}>
                     <h5>{item.name}</h5>
                     <h4>EGP {item.price}</h4>
                   </div>
-                  <div className="flex bottom">
+                  <div className={`${Styles.flex} ${Styles.bottom}`}>
                     <div>
                       <p className="quantity-desc">
                         <span
@@ -113,7 +115,7 @@ const Cart = () => {
                     </div>
                     <button
                       type="button"
-                      className="remove-item"
+                      className={Styles.remove_item}
                       onClick={() => onRemove(item)}
                     >
                       <TiDeleteOutline />
@@ -124,22 +126,26 @@ const Cart = () => {
             ))}
         </div>
         {cartItems.length >= 1 && (
-          <div className="cart-bottom">
-            <div className="total">
+          <div className={Styles.cart_bottom}>
+            <div className={Styles.total}>
               <h3>Subtotal:</h3>
               <h3>EGP {totalPrice}</h3>
             </div>
-            <div className="btn-container">
+            <div className={Styles.btn_container}>
               <Link href="/success">
                 <button
                   type="button"
-                  className="btn"
+                  className={Styles.btn}
                   onClick={() => setShowCart(() => false)}
                 >
                   Pay On Delivery
                 </button>
               </Link>
-              <button type="button" className="btn" onClick={handleCheckout}>
+              <button
+                type="button"
+                className={Styles.btn}
+                onClick={handleCheckout}
+              >
                 Pay with Card
               </button>
             </div>
