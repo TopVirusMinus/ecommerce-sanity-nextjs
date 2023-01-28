@@ -6,19 +6,15 @@ import { urlFor } from "../../lib/client";
 
 const HeroBanner = ({ banner }) => {
   return (
-    <div className="hero-banner-container">
+    <div className={Styles.hero_banner_container}>
       <div>
-        <p className="beats-solo">{banner.product}</p>
-        <h3 className="text-7xl mt-1" id="midText">
-          {banner.midText}
-        </h3>
-        <h1 className="text-white text-9xl ml-[-20px] uppercase">
-          {banner.largeText1}
-        </h1>
+        <p className={Styles.banner_product}>{banner.product}</p>
+        <h3>{banner.midText}</h3>
+        <h1>{banner.largeText1}</h1>
         <Image
           src={urlFor(banner.image).url()}
           alt="headphones"
-          className="hero-banner-image"
+          className={Styles.hero_banner_image}
           width={555}
           height={555}
         />
@@ -26,7 +22,7 @@ const HeroBanner = ({ banner }) => {
           <Link href="/product/ID">
             <button type="button">{banner.buttonText}</button>
           </Link>
-          <div className="desc">
+          <div className={Styles.desc}>
             <h5>{banner.smallText}</h5>
             <p>{banner.desc}</p>
           </div>
