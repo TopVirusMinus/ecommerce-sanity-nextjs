@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { AiOutlineShoppingCart, AiOutlineHeart } from "react-icons/ai";
 import { RiAccountCircleLine } from "react-icons/ri";
@@ -6,9 +6,18 @@ import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { useStateContext } from "../../context/StateContext";
 import Cart from "../Cart/Cart";
 import Styles from "./Navbar.module.css";
-
+import { UserAuth } from "../../context/AuthContext";
 const Navbar = () => {
   const { showCart, setShowCart, totalQuantities } = useStateContext();
+  const { googleSignIn } = UserAuth();
+
+  const handleGoogleLogin = async () => {
+    try {
+      await googleSignIn();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className={Styles.navbar_container}>
@@ -16,20 +25,24 @@ const Navbar = () => {
         <Link href="/">Marzouk Headphones</Link>
       </p>
       <div className={Styles.right_Navbar_section}>
-        <div class={Styles.dropdown}>
+        <div className={Styles.dropdown}>
           <RiAccountCircleLine size={25} />
-          <div class={Styles.dropdown_content}>
-            <Link href="/" className={Styles.links}>
+          <div className={Styles.dropdown_content}>
+            <Link
+              href=""
+              className={Styles.links}
+              onClick={() => handleGoogleLogin()}
+            >
               <BiLogIn />
               <p>
                 Log In<span style={{ opacity: "0" }}>O</span>
               </p>
             </Link>
-            <Link href="/" className={Styles.links}>
+            <Link href="" className={Styles.links}>
               <AiOutlineHeart />
               <p>Wishlist</p>
             </Link>
-            <Link href="/" className={Styles.links}>
+            <Link href="" className={Styles.links}>
               <BiLogOut />
               <p>Log Out</p>
             </Link>
