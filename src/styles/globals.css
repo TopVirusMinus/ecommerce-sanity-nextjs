@@ -16,15 +16,6 @@ a {
   text-decoration: none;
 }
 
-.main-container {
-  max-width: 1400px;
-  margin: auto;
-  width: 100%;
-}
-.layout {
-  padding: 10px;
-}
-
 .marquee-text {
   font-size: 29px;
   font-weight: 600;
