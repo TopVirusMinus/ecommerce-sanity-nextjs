@@ -1,0 +1,29 @@
+@media screen and (max-width: 800px) {
+  .hero_banner_image {
+    width: 77%;
+    height: 62%;
+    top: -2%;
+    right: -6%;
+  }
+
+  .hero_banner_container {
+    line-height: 1.3;
+  }
+
+  .hero_banner_container h1 {
+    font-size: 50px;
+  }
+
+  .hero_banner_container h3 {
+    font-size: 40px;
+  }
+
+  .hero_banner_container button {
+    margin-top: 90px;
+    z-index: 10000;
+  }
+
+  .desc {
+    bottom: 60px;
+  }
+}

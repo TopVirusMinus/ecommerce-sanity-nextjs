@@ -9,11 +9,11 @@ import {
 import { TiDeleteOutline } from "react-icons/ti";
 import toast from "react-hot-toast";
 
-import { useStateContext } from "../context/StateContext";
-import { urlFor } from "../lib/client";
-import getStripe from "../lib/getStripe";
+import { useStateContext } from "../../context/StateContext";
+import { urlFor } from "../../lib/client";
+import getStripe from "../../lib/getStripe";
 import Image from "next/image";
-
+import Styles from "./Cart.module.css";
 const Cart = () => {
   const cartRef = useRef();
   const {
@@ -130,9 +130,15 @@ const Cart = () => {
               <h3>EGP {totalPrice}</h3>
             </div>
             <div className="btn-container">
-              <button type="button" className="btn" onClick={() => 1}>
-                Pay On Delivery
-              </button>
+              <Link href="/success">
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() => setShowCart(() => false)}
+                >
+                  Pay On Delivery
+                </button>
+              </Link>
               <button type="button" className="btn" onClick={handleCheckout}>
                 Pay with Card
               </button>

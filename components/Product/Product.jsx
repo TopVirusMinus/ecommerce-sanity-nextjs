@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { urlFor } from "../lib/client";
+import { urlFor } from "../../lib/client";
+import Styles from "./Product.module.css";
 
 const Product = ({ product: { image, name, slug, price } }) => {
   return (

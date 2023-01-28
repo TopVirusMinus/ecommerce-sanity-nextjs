@@ -8,7 +8,7 @@ import {
   AiOutlineStar,
   AiOutlineHeart,
 } from "react-icons/ai";
-import Product from "../../../components/Product";
+import Product from "../../../components/Product/Product";
 import { useState } from "react";
 import { useStateContext } from "../../../context/StateContext";
 
