@@ -7,6 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
@@ -45,6 +46,17 @@ export const AuthContextProvider = ({ children }) => {
       })
       .catch((error) => toast.error(error.message));
   };
+
+  const resetPassword = async (email, redirect) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      toast.success(`Password reset email sent successfully!`);
+      redirect && router.push(redirect);
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
   const logOut = () => {
     try {
       signOut(auth);
@@ -67,7 +79,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ signIn, signInMail, registerMail, logOut, user }}
+      value={{ signIn, signInMail, registerMail, logOut, user, resetPassword }}
     >
       {children}
     </AuthContext.Provider>

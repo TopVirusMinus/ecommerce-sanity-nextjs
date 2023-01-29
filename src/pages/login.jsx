@@ -9,6 +9,8 @@ import {
   FacebookAuthProvider,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
+import Link from "next/link";
+import SubmitButton from "../../components/SubmitButton/SubmitButton";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -154,19 +156,13 @@ const Login = () => {
                 name="confirmPassword"
                 required
               />
-              <button
-                type="submit"
-                className={`${Styles.btn} ${
-                  !isValid.current && Styles.disabled
-                }`}
-                onClick={(e) => {
-                  e.preventDefault();
+              <SubmitButton
+                isValid={isValidState}
+                text={"Register"}
+                handleClick={() => {
                   registerMail(email, password);
                 }}
-                disabled={!isValidState}
-              >
-                Register
-              </button>
+              />
             </>
           ) : (
             <>
@@ -192,32 +188,33 @@ const Login = () => {
                 name="password"
                 required
               />
-              <button
-                type="submit"
-                className={`${Styles.btn} ${
-                  !isValid.current && Styles.disabled
-                }`}
-                disabled={!isValidState}
-                onClick={(e) => {
-                  e.preventDefault();
+              <SubmitButton
+                isValid={isValidState}
+                text={"Log In"}
+                handleClick={() => {
                   signInMail(email, password, "/");
                 }}
-              >
-                Login
-              </button>
+              />
             </>
           )}
         </form>
         {isRegister ? (
-          <p>
-            Already have an account?{" "}
-            <a
-              className={Styles.toggleRegister}
-              onClick={() => handleRegisterToggle(false)}
-            >
-              Login
-            </a>
-          </p>
+          <>
+            <p className={Styles.ahaveacc}>
+              Already have an account?{" "}
+              <a
+                className={Styles.toggleRegister}
+                onClick={() => handleRegisterToggle(false)}
+              >
+                Login
+              </a>
+            </p>
+            <p>
+              <Link href="/reset-password" className={Styles.toggleRegister}>
+                Forgot your password?
+              </Link>
+            </p>
+          </>
         ) : (
           <p>
             Don&apos;t have an account?{" "}

@@ -1,0 +1,29 @@
+.unhidden {
+  opacity: 1;
+}
+
+.disabled {
+  background: hsl(86, 65%, 85%) !important;
+  color: rgb(107, 107, 107) !important;
+  cursor: auto !important;
+  pointer-events: none !important;
+}
+
+.submit {
+  width: 100%;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(-5deg, hsl(86, 61%, 44%), hsl(86, 65%, 54%));
+  border: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: 0 3px 0px hsla(86, 21%, 44%, 0.2);
+  text-shadow: 0 2px 3px hsla(0, 0, 0, 0.2);
+
+  &:hover {
+    background: linear-gradient(-5deg, hsl(86, 61%, 44%), hsl(86, 57%, 43%));
+  }
+  cursor: pointer;
+}
