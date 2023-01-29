@@ -200,7 +200,7 @@ const Login = () => {
         </form>
         {isRegister ? (
           <>
-            <p>
+            <p className={Styles.ahaveacc}>
               Already have an account?{" "}
               <a
                 className={Styles.toggleRegister}

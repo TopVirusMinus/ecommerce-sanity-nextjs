@@ -47,10 +47,11 @@ export const AuthContextProvider = ({ children }) => {
       .catch((error) => toast.error(error.message));
   };
 
-  const resetPassword = async (email) => {
+  const resetPassword = async (email, redirect) => {
     try {
       await sendPasswordResetEmail(auth, email);
       toast.success(`Password reset email sent successfully!`);
+      redirect && router.push(redirect);
     } catch (err) {
       toast.error(err.message);
     }

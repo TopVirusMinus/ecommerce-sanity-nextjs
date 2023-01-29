@@ -1,13 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Styles from "../styles/forgotPassword.module.scss";
+import Styles from "../styles/resetPassword.module.scss";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import { UserAuth } from "../../context/AuthContext";
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [isValidState, setIsValidState] = useState(false);
-  const router = useRouter();
   const { resetPassword } = UserAuth();
 
   const handleSubmit = (event) => {
@@ -39,7 +38,8 @@ const ResetPassword = () => {
         <SubmitButton
           isValid={isValidState}
           text={"Send Email"}
-          handleClick={() => resetPassword(email)}
+          onClick={() => setReset((prev) => true)}
+          handleClick={() => resetPassword(email, "/login")}
         />
       </form>
       <div className={Styles.links}>
