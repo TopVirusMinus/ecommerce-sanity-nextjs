@@ -13,15 +13,7 @@ import Styles from "./Navbar.module.css";
 import { UserAuth } from "../../context/AuthContext";
 const Navbar = () => {
   const { showCart, setShowCart, totalQuantities } = useStateContext();
-  const { googleSignIn, logOut, user } = UserAuth();
-
-  const handleGoogleLogin = async () => {
-    try {
-      await googleSignIn();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const { logOut, user } = UserAuth();
 
   const handleSignOut = async () => {
     try {

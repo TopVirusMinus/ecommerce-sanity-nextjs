@@ -3,29 +3,55 @@ import { auth } from "../config/firebase";
 import {
   signInWithPopup,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signOut,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
-  const googleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
+  const router = useRouter();
+
+  const signIn = async (loginMethod, redirect) => {
+    const provider = new loginMethod();
     try {
       await signInWithPopup(auth, provider);
       toast.success(`Logged In!`);
+      redirect && router.push(redirect);
     } catch (err) {
-      toast.error("Couldn't Login!");
+      toast.error(err.message);
     }
   };
 
+  const registerMail = async (email, pass) => {
+    await createUserWithEmailAndPassword(auth, email, pass)
+      .then((userCredentials) => {
+        setUser((prev) => userCredentials.user);
+        toast.success("Register Successful!");
+      })
+      .catch((error) => toast.error(error.message));
+  };
+  const signInMail = async (email, pass, redirect) => {
+    await signInWithEmailAndPassword(auth, email, pass)
+      .then((userCredentials) => {
+        toast.success("Sign In Successful!");
+        redirect && router.push(redirect);
+      })
+      .catch((error) => toast.error(error.message));
+  };
   const logOut = () => {
-    signOut(auth);
-    toast.success(`Logged Out!`);
+    try {
+      signOut(auth);
+      toast.success(`Logged Out!`);
+    } catch {
+      toast.error("Couldn't Logout!");
+    }
   };
 
   useEffect(() => {
@@ -39,7 +65,9 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ googleSignIn, logOut, user }}>
+    <AuthContext.Provider
+      value={{ signIn, signInMail, registerMail, logOut, user }}
+    >
       {children}
     </AuthContext.Provider>
   );
