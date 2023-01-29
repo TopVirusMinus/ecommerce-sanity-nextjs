@@ -33,19 +33,21 @@ const Login = () => {
   const validEmail =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  isRegister &&
-  username.length > 0 &&
-  validEmail.test(email) &&
-  password.length > 0 &&
-  confirmPassword.length > 0 &&
-  password === confirmPassword
+  isRegister
+    ? username.length > 0 &&
+      validEmail.test(email) &&
+      password.length > 0 &&
+      confirmPassword.length > 0 &&
+      password === confirmPassword
+      ? (isValid.current = true)
+      : (isValid.current = false)
+    : validEmail.test(email) && password.length > 0
     ? (isValid.current = true)
     : (isValid.current = false);
 
   isValid.current && !isValidState ? setIsValidState((prev) => true) : false;
   !isValid.current && isValidState ? setIsValidState((prev) => false) : false;
 
-  console.log(isValid.current);
   return (
     <div className={`${Styles.signup}`}>
       <div className={Styles.signup_connect}>
@@ -88,7 +90,9 @@ const Login = () => {
         <form className={Styles.form}>
           {isRegister ? (
             <>
-              {!username && <span>* required</span>}
+              <span className={`${username ? Styles.hidden : Styles.unhidden}`}>
+                * required
+              </span>
               <input
                 autoComplete="off"
                 value={username}
@@ -98,7 +102,9 @@ const Login = () => {
                 name="username"
                 required
               />
-              {!email && <span>* required</span>}
+              <span className={`${email ? Styles.hidden : Styles.unhidden}`}>
+                * required
+              </span>
               <input
                 autoComplete="off"
                 value={email}
@@ -110,7 +116,13 @@ const Login = () => {
                 name="email"
                 required
               />
-              {!password && <span>* required</span>}
+              {
+                <span
+                  className={`${password ? Styles.hidden : Styles.unhidden}`}
+                >
+                  * required
+                </span>
+              }
               <input
                 autoComplete="off"
                 value={password}
@@ -120,7 +132,23 @@ const Login = () => {
                 name="password"
                 required
               />
-              {!confirmPassword && <span>* required</span>}
+              {password !== confirmPassword ? (
+                <span
+                  className={`${
+                    password !== confirmPassword
+                      ? Styles.unhidden
+                      : Styles.hidden
+                  }`}
+                >
+                  Passwords do not match
+                </span>
+              ) : (
+                <span
+                  className={`${password ? Styles.hidden : Styles.unhidden}`}
+                >
+                  * required
+                </span>
+              )}
               <input
                 autoComplete="off"
                 value={confirmPassword}
@@ -147,7 +175,9 @@ const Login = () => {
             </>
           ) : (
             <>
-              {!email && <span>* required</span>}
+              <span className={`${email ? Styles.hidden : Styles.unhidden}`}>
+                * required
+              </span>
               <input
                 autoComplete="off"
                 value={email}
@@ -157,7 +187,9 @@ const Login = () => {
                 name="email"
                 required
               />
-              {!password && <span>* required</span>}
+              <span className={`${password ? Styles.hidden : Styles.unhidden}`}>
+                * required
+              </span>
               <input
                 autoComplete="off"
                 value={password}
@@ -169,7 +201,10 @@ const Login = () => {
               />
               <button
                 type="submit"
-                className={Styles.btn}
+                className={`${Styles.btn} ${
+                  !isValid.current && Styles.disabled
+                }`}
+                disabled={!isValidState}
                 onClick={(e) => {
                   e.preventDefault();
                   signInMail(email, password, "/");

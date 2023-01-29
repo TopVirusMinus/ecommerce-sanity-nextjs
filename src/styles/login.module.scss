@@ -5,6 +5,14 @@ Buttons
   color: #333 !important;
 }
 
+.hidden {
+  opacity: 0;
+}
+
+.unhidden {
+  opacity: 1;
+}
+
 .disabled {
   background: hsl(86, 65%, 85%) !important;
   color: rgb(107, 107, 107) !important;
