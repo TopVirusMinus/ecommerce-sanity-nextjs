@@ -14,6 +14,7 @@ import { urlFor } from "../../lib/client";
 import getStripe from "../../lib/getStripe";
 import Image from "next/image";
 import Styles from "./Cart.module.css";
+
 const Cart = () => {
   const cartRef = useRef();
   const {

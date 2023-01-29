@@ -12,10 +12,15 @@ import Product from "../../../components/Product/Product";
 import { useState } from "react";
 import { useStateContext } from "../../../context/StateContext";
 import Styles from "../../styles/productDetails.module.css";
+import { UserAuth } from "../../../context/AuthContext";
+import { useRouter } from "next/router";
+
 const ProductDetails = ({ product, products }) => {
   const { image, name, details, price } = product;
   const [index, setIndex] = useState(0);
   const { incQty, decQty, qty, onAdd, setShowCart } = useStateContext();
+  const { user } = useStateContext();
+  const router = useRouter();
 
   const handleBuyNow = () => {
     onAdd(product, qty);
@@ -85,7 +90,9 @@ const ProductDetails = ({ product, products }) => {
           <div className={Styles.buttons}>
             <button
               type="button"
-              onClick={() => onAdd(product, qty)}
+              onClick={() =>
+                !user ? router.push("/login") : onAdd(product, qty)
+              }
               className={Styles.add_to_cart}
             >
               Add to Cart
@@ -93,7 +100,7 @@ const ProductDetails = ({ product, products }) => {
             <button
               type="button"
               className={Styles.buy_now}
-              onClick={() => handleBuyNow()}
+              onClick={() => (!user ? router.push("/login") : handleBuyNow())}
             >
               Buy now
             </button>
