@@ -41,11 +41,7 @@ const Navbar = () => {
           <RiAccountCircleLine size={25} />
           <div className={Styles.dropdown_content}>
             {!user?.displayName ? (
-              <Link
-                href=""
-                className={Styles.links}
-                onClick={() => handleGoogleLogin()}
-              >
+              <Link href="/login" className={Styles.links}>
                 <BiLogIn />
                 <p>
                   Log In<span style={{ opacity: "0" }}>O</span>

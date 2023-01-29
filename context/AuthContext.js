@@ -7,17 +7,25 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    try {
+      await signInWithPopup(auth, provider);
+      toast.success(`Logged In!`);
+    } catch (err) {
+      toast.error("Couldn't Login!");
+    }
   };
 
   const logOut = () => {
     signOut(auth);
+    toast.success(`Logged Out!`);
   };
 
   useEffect(() => {
