@@ -5,6 +5,13 @@ Buttons
   color: #333 !important;
 }
 
+.disabled {
+  background: hsl(86, 65%, 85%) !important;
+  color: rgb(107, 107, 107) !important;
+  cursor: auto !important;
+  pointer-events: none !important;
+}
+
 .btn {
   display: block;
   background: hsl(86, 76%, 71%);

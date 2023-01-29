@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Styles from "../styles/login.module.scss";
 import { BsGoogle } from "react-icons/bs";
 import { ImFacebook } from "react-icons/im";
@@ -17,16 +17,35 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { signIn, signInMail, registerMail } = UserAuth();
   const [isRegister, setIsRegister] = useState(true);
-  const [isValid, setIsValid] = useState(false);
+  const [isValidState, setIsValidState] = useState(false);
+
+  const isValid = useRef(false);
   const handleRegisterToggle = (registerMode) => {
     setIsRegister((prev) => registerMode);
     setUsername((prev) => "");
     setEmail((prev) => "");
     setPassword((prev) => "");
     setConfirmPassword((prev) => "");
-    setIsValid((prev) => false);
+    isValid.current = false;
   };
 
+  const validCharacters = /^[a-zA-Z ]+$/;
+  const validEmail =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  isRegister &&
+  username.length > 0 &&
+  validEmail.test(email) &&
+  password.length > 0 &&
+  confirmPassword.length > 0 &&
+  password === confirmPassword
+    ? (isValid.current = true)
+    : (isValid.current = false);
+
+  isValid.current && !isValidState ? setIsValidState((prev) => true) : false;
+  !isValid.current && isValidState ? setIsValidState((prev) => false) : false;
+
+  console.log(isValid.current);
   return (
     <div className={`${Styles.signup}`}>
       <div className={Styles.signup_connect}>
@@ -55,7 +74,7 @@ const Login = () => {
           <a
             href="#"
             className={`${Styles.btn} ${Styles.btn_social} ${Styles.btn_mail}`}
-            onClick={(e) => signIn(createUserWithEmailAndPassword, "/")}
+            onClick={(e) => signInMail(email, password, "/")}
           >
             <i className={`${Styles.fa} ${Styles.fa_facebook}`}>
               <AiOutlineMail />
@@ -71,6 +90,7 @@ const Login = () => {
             <>
               {!username && <span>* required</span>}
               <input
+                autoComplete="off"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
@@ -80,8 +100,11 @@ const Login = () => {
               />
               {!email && <span>* required</span>}
               <input
+                autoComplete="off"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 placeholder="Email address"
                 type="email"
                 name="email"
@@ -89,6 +112,7 @@ const Login = () => {
               />
               {!password && <span>* required</span>}
               <input
+                autoComplete="off"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
@@ -98,6 +122,7 @@ const Login = () => {
               />
               {!confirmPassword && <span>* required</span>}
               <input
+                autoComplete="off"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm Password"
@@ -106,13 +131,16 @@ const Login = () => {
                 required
               />
               <button
+                autoComplete="off"
                 type="submit"
-                className={`${Styles.btn} {}`}
+                className={`${Styles.btn} ${
+                  !isValid.current && Styles.disabled
+                }`}
                 onClick={(e) => {
                   e.preventDefault();
                   registerMail(email, password);
                 }}
-                disabled={true}
+                disabled={!isValidState}
               >
                 Register
               </button>
@@ -121,6 +149,7 @@ const Login = () => {
             <>
               {!email && <span>* required</span>}
               <input
+                autoComplete="off"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email address"
@@ -130,6 +159,7 @@ const Login = () => {
               />
               {!password && <span>* required</span>}
               <input
+                autoComplete="off"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
