@@ -49,6 +49,7 @@ export const AuthContextProvider = ({ children }) => {
     try {
       signOut(auth);
       toast.success(`Logged Out!`);
+      router.push("/login");
     } catch {
       toast.error("Couldn't Logout!");
     }

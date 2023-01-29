@@ -9,7 +9,6 @@ import {
   FacebookAuthProvider,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { P } from "ecommerce-nextjs/dist/static/desk-beccae6c-110b44e0";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -34,7 +33,7 @@ const Login = () => {
           <a
             href="#"
             className={`${Styles.btn} ${Styles.btn_social} ${Styles.btn_google}`}
-            onClick={(e) => signIn(GoogleAuthProvider, true)}
+            onClick={(e) => signIn(GoogleAuthProvider, "/")}
           >
             <i className={`${Styles.fa} ${Styles.fa_google}`}>
               <BsGoogle />
@@ -115,6 +114,7 @@ const Login = () => {
                   e.preventDefault();
                   registerMail(email, password);
                 }}
+                disabled={true}
               >
                 Register
               </button>
@@ -167,12 +167,13 @@ const Login = () => {
         ) : (
           <p>
             Don&apos;t have an account?{" "}
-            <a
+            <button
               className={Styles.toggleRegister}
               onClick={() => handleRegisterToggle(true)}
+              disabled={true}
             >
               Register
-            </a>
+            </button>
           </p>
         )}
       </div>
