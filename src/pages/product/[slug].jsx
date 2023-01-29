@@ -19,7 +19,7 @@ const ProductDetails = ({ product, products }) => {
   const { image, name, details, price } = product;
   const [index, setIndex] = useState(0);
   const { incQty, decQty, qty, onAdd, setShowCart } = useStateContext();
-  const { user } = useStateContext();
+  const { user } = UserAuth();
   const router = useRouter();
 
   const handleBuyNow = () => {
