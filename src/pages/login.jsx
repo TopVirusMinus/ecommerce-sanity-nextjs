@@ -87,14 +87,13 @@ const Login = () => {
       </div>
       <div className={Styles.signup_classic}>
         <h2>Or use the classical way</h2>
-        <form className={Styles.form}>
+        <form className={Styles.form} autoComplete="new-password">
           {isRegister ? (
             <>
               <span className={`${username ? Styles.hidden : Styles.unhidden}`}>
                 * required
               </span>
               <input
-                autoComplete="off"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
@@ -106,7 +105,6 @@ const Login = () => {
                 * required
               </span>
               <input
-                autoComplete="off"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -124,7 +122,6 @@ const Login = () => {
                 </span>
               }
               <input
-                autoComplete="off"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
@@ -150,7 +147,6 @@ const Login = () => {
                 </span>
               )}
               <input
-                autoComplete="off"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm Password"
@@ -159,7 +155,6 @@ const Login = () => {
                 required
               />
               <button
-                autoComplete="off"
                 type="submit"
                 className={`${Styles.btn} ${
                   !isValid.current && Styles.disabled
@@ -179,7 +174,6 @@ const Login = () => {
                 * required
               </span>
               <input
-                autoComplete="off"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email address"
@@ -191,7 +185,6 @@ const Login = () => {
                 * required
               </span>
               <input
-                autoComplete="off"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"

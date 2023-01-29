@@ -89,6 +89,12 @@ Form
   cursor: pointer;
 }
 .form {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-text-fill-color: black !important;
+  }
   input {
     border: none;
     padding: 0;
