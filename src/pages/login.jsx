@@ -17,14 +17,16 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { signIn, signInMail, registerMail } = UserAuth();
   const [isRegister, setIsRegister] = useState(true);
-
+  const [isValid, setIsValid] = useState(false);
   const handleRegisterToggle = (registerMode) => {
     setIsRegister((prev) => registerMode);
     setUsername((prev) => "");
     setEmail((prev) => "");
     setPassword((prev) => "");
     setConfirmPassword((prev) => "");
+    setIsValid((prev) => false);
   };
+
   return (
     <div className={`${Styles.signup}`}>
       <div className={Styles.signup_connect}>
@@ -75,7 +77,6 @@ const Login = () => {
                 type="text"
                 name="username"
                 required
-                className={Styles.input_field}
               />
               {!email && <span>* required</span>}
               <input
@@ -85,7 +86,6 @@ const Login = () => {
                 type="email"
                 name="email"
                 required
-                className={Styles.input_field}
               />
               {!password && <span>* required</span>}
               <input
@@ -95,7 +95,6 @@ const Login = () => {
                 type="password"
                 name="password"
                 required
-                className={Styles.input_field}
               />
               {!confirmPassword && <span>* required</span>}
               <input
@@ -105,11 +104,10 @@ const Login = () => {
                 type="Password"
                 name="confirmPassword"
                 required
-                className={Styles.input_field}
               />
               <button
                 type="submit"
-                className={Styles.btn}
+                className={`${Styles.btn} {}`}
                 onClick={(e) => {
                   e.preventDefault();
                   registerMail(email, password);
@@ -129,7 +127,6 @@ const Login = () => {
                 type="email"
                 name="email"
                 required
-                className={Styles.input_field}
               />
               {!password && <span>* required</span>}
               <input
@@ -139,7 +136,6 @@ const Login = () => {
                 type="password"
                 name="password"
                 required
-                className={Styles.input_field}
               />
               <button
                 type="submit"
@@ -167,13 +163,12 @@ const Login = () => {
         ) : (
           <p>
             Don&apos;t have an account?{" "}
-            <button
+            <a
               className={Styles.toggleRegister}
               onClick={() => handleRegisterToggle(true)}
-              disabled={true}
             >
               Register
-            </button>
+            </a>
           </p>
         )}
       </div>
