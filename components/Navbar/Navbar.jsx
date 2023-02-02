@@ -41,7 +41,7 @@ const Navbar = () => {
               </Link>
             ) : (
               <Link href="" className={Styles.links}>
-                <AiOutlineUser />
+                <AiOutlineUser style={{ cursor: "pointer" }} />
                 <p>{user.displayName.split(" ")[0]}</p>
               </Link>
             )}
