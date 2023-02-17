@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Styles from "../styles/login.module.scss";
 import { BsGoogle } from "react-icons/bs";
 import { ImFacebook } from "react-icons/im";
@@ -11,6 +11,8 @@ import {
 } from "firebase/auth";
 import Link from "next/link";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
+import { collection, getDocs, addDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -31,6 +33,8 @@ const Login = () => {
     isValid.current = false;
   };
 
+  const userCollectionRef = collection(db, "Users");
+
   const validCharacters = /^[a-zA-Z ]+$/;
   const validEmail =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -49,6 +53,17 @@ const Login = () => {
 
   isValid.current && !isValidState ? setIsValidState((prev) => true) : false;
   !isValid.current && isValidState ? setIsValidState((prev) => false) : false;
+
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const data = await getDocs(userCollectionRef);
+  //     console.log("Got Data From FIRESTORE");
+  //     console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //     console.log("Saved Data to FIRESTORE");
+  //   };
+
+  //   getUsers();
+  // }, []);
 
   return (
     <div className={`${Styles.signup}`}>
@@ -78,7 +93,8 @@ const Login = () => {
           <a
             href="#"
             className={`${Styles.btn} ${Styles.btn_social} ${Styles.btn_mail}`}
-            onClick={(e) => signInMail(email, password, "/")}
+            // onClick={(e) => signInMail(email, password, "/")}
+            onClick={(e) => setIsRegister((prev) => false)}
           >
             <i className={`${Styles.fa} ${Styles.fa_facebook}`}>
               <AiOutlineMail />
