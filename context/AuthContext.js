@@ -1,4 +1,10 @@
-import React, { useContext, createContext, useState, useEffect } from "react";
+import React, {
+  useContext,
+  createContext,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 import { auth } from "../config/firebase";
 import {
   signInWithPopup,
@@ -13,12 +19,13 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, doc, setDoc, getDocs, getDoc } from "firebase/firestore";
+import { collection, doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+
   const router = useRouter();
   const usersRef = collection(db, "Users");
 
