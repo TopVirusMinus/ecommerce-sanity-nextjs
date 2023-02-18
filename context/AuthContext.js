@@ -27,7 +27,8 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const signIn = await signInWithPopup(auth, provider);
       //console.log(signIn.user.providerData[0].uid);
-      await setDoc(doc(db, "Users", signIn.user.providerData[0].uid), {});
+      console.log(signIn.user.uid);
+      await setDoc(doc(db, "Users", signIn.user.uid), {});
       toast.success(`Logged In!`);
       redirect && router.push(redirect);
     } catch (err) {

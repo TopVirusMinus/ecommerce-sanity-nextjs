@@ -23,6 +23,7 @@ const Navbar = () => {
     }
   };
 
+  console.log(`UID ${user?.uid}`);
   return (
     <div className={Styles.navbar_container}>
       <p className={Styles.logo}>
