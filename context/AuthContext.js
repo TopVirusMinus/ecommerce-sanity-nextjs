@@ -13,14 +13,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc, getDocs, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const router = useRouter();
-  const userCollectionRef = collection(db, "Users");
+  const usersRef = collection(db, "Users");
 
   const signIn = async (loginMethod, redirect) => {
     const provider = new loginMethod();
@@ -28,7 +28,17 @@ export const AuthContextProvider = ({ children }) => {
       const signIn = await signInWithPopup(auth, provider);
       //console.log(signIn.user.providerData[0].uid);
       console.log(signIn.user.uid);
-      await setDoc(doc(db, "Users", signIn.user.uid), {});
+
+      const currentUserCheckRef = doc(db, "Users", signIn.user.uid);
+      const docSnap = await getDoc(currentUserCheckRef);
+
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+      } else {
+        await setDoc(doc(usersRef, signIn.user.uid), {});
+        console.log("No such document!");
+      }
+
       toast.success(`Logged In!`);
       redirect && router.push(redirect);
     } catch (err) {

@@ -14,7 +14,6 @@ import { urlFor } from "../../lib/client";
 import getStripe from "../../lib/getStripe";
 import Image from "next/image";
 import Styles from "./Cart.module.css";
-
 const Cart = () => {
   const cartRef = useRef();
   const {
@@ -137,12 +136,15 @@ const Cart = () => {
                 <button
                   type="button"
                   className={Styles.btn}
-                  onClick={() => setShowCart(() => false)}
+                  onClick={() => {
+                    setShowCart(() => false);
+                  }}
                 >
                   Pay On Delivery
                 </button>
               </Link>
               <button
+                disabled={true}
                 type="button"
                 className={Styles.btn}
                 onClick={handleCheckout}
