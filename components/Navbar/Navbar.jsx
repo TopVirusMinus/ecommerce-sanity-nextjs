@@ -14,7 +14,7 @@ import { UserAuth } from "../../context/AuthContext";
 const Navbar = () => {
   const { showCart, setShowCart, totalQuantities } = useStateContext();
   const { logOut, user } = UserAuth();
-
+  console.log(`USER: ${JSON.stringify(user)}`);
   const handleSignOut = async () => {
     try {
       await logOut();

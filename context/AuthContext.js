@@ -28,8 +28,7 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
   const router = useRouter();
-  const usersRef = collection(db, "Users");
-
+  let currentUserDB = {};
   const signIn = async (loginMethod, redirect) => {
     const provider = new loginMethod();
     try {
@@ -38,9 +37,10 @@ export const AuthContextProvider = ({ children }) => {
       console.log(signIn.user.uid);
 
       const currentUserCheckRef = doc(db, "Users", signIn.user.uid);
-      const docSnap = await getDoc(currentUserCheckRef);
-      if (docSnap && docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
+      currentUserDB = await getDoc(currentUserCheckRef);
+      //console.log(`prePreUser ${JSON.stringify(currentUserDB)}`);
+      if (currentUserDB && currentUserDB.exists()) {
+        console.log("Document data:", currentUserDB.data());
         redirect && router.push(redirect);
       } else {
         await setDoc(doc(db, "Users", signIn.user.uid), {
@@ -51,6 +51,7 @@ export const AuthContextProvider = ({ children }) => {
         console.log("No such document!");
       }
 
+      setUser((prev) => currentUserDB.data());
       toast.success(`Logged In!`);
     } catch (err) {
       toast.error(err.message);
@@ -96,8 +97,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser((prev) => currentUser);
-      //console.log(currentUser);
+      !currentUser && setUser((prev) => null);
     });
     return () => {
       unsubscribe();
