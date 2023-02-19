@@ -2,19 +2,29 @@ import React, { useState } from "react";
 import styles from "./Profile.module.scss";
 import ReactFlagsSelect from "react-flags-select";
 import Select from "react-select";
+import { UserAuth } from "../../context/AuthContext";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import toast from "react-hot-toast";
+import { usersDTO } from "../../lib/Dtos";
 
 function Profile() {
-  const [address, setAddress] = useState("");
-  const [apartment, setApartment] = useState("");
-  const [country, setCountry] = useState("EG");
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [governorate, setGovernorate] = useState("Cairo");
-  const [lastName, setLastName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [city, setCity] = useState("");
-  const [postalCode, setPostalCode] = useState("");
+  try {
+    var { logOut, user } = UserAuth();
+  } catch {}
 
+  const [address, setAddress] = useState(user?.address);
+  const [apartment, setApartment] = useState(user?.apartment);
+  const [country, setCountry] = useState(user?.country);
+  const [email, setEmail] = useState(user?.email);
+  const [firstName, setFirstName] = useState(user?.firstName);
+  const [governorate, setGovernorate] = useState(user?.governorate);
+  const [lastName, setLastName] = useState(user?.lastName);
+  const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber);
+  const [city, setCity] = useState(user?.city);
+  const [postalCode, setPostalCode] = useState(user?.postalCode);
+
+  //console.log(`USER PROFILE: ${JSON.stringify(user)}`);
   const handleSubmit = (event) => {
     event.preventDefault();
     // Handle form submission here
@@ -52,8 +62,27 @@ function Profile() {
   ];
 
   const options = governorates;
-  const defaultOption = options[5];
 
+  const saveInfo = async () => {
+    try {
+      await setDoc(doc(db, "Users", user.id), {
+        ...usersDTO,
+        address,
+        apartment,
+        country,
+        email,
+        firstName,
+        governorate,
+        lastName,
+        phoneNumber,
+        city,
+        postalCode,
+      });
+      toast.success(`Saved Info!`);
+    } catch (error) {
+      toast.success(error);
+    }
+  };
   return (
     <div className={styles.form}>
       <div className={styles.country}>
@@ -176,6 +205,7 @@ function Profile() {
           Email
         </label>
         <input
+          disabled={true}
           value={email}
           onChange={(e) => setEmail((prev) => e.target.value)}
           className={styles.input}
@@ -204,7 +234,9 @@ function Profile() {
           required
         />
       </div>
-      <button className={styles.button}>Submit</button>
+      <button onClick={() => saveInfo()} className={styles.button}>
+        Save
+      </button>
     </div>
   );
 }

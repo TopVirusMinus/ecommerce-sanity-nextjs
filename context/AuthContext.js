@@ -46,12 +46,15 @@ export const AuthContextProvider = ({ children }) => {
         await setDoc(doc(db, "Users", signIn.user.uid), {
           ...usersDTO,
           email: signIn.user.email,
+          country: "EG",
         });
         router.push("/profile");
         console.log("No such document!");
       }
 
-      setUser((prev) => currentUserDB.data());
+      setUser((prev) => {
+        return { ...currentUserDB.data(), id: signIn.user.uid };
+      });
       toast.success(`Logged In!`);
     } catch (err) {
       toast.error(err.message);
