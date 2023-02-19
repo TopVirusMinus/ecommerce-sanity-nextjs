@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Profile.module.scss";
 import ReactFlagsSelect from "react-flags-select";
+import Select from "react-select";
 
 function Profile() {
   const [address, setAddress] = useState("");
@@ -8,15 +9,50 @@ function Profile() {
   const [country, setCountry] = useState("EG");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [governorate, setGovernorate] = useState("");
+  const [governorate, setGovernorate] = useState("Cairo");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // Handle form submission here
   };
+
+  const governorates = [
+    { label: "Alexandria", value: "Alexandria" },
+    { label: "Aswan", value: "Aswan" },
+    { label: "Asyut", value: "Asyut" },
+    { label: "Beheira", value: "Beheira" },
+    { label: "Beni Suef", value: "Beni Suef" },
+    { label: "Cairo", value: "Cairo" },
+    { label: "Dakahlia", value: "Dakahlia" },
+    { label: "Damietta", value: "Damietta" },
+    { label: "Faiyum", value: "Faiyum" },
+    { label: "Gharbia", value: "Gharbia" },
+    { label: "Giza", value: "Giza" },
+    { label: "6 October", value: "6 October" },
+    { label: "Ismailia", value: "Ismailia" },
+    { label: "Kafr El Sheikh", value: "Kafr El Sheikh" },
+    { label: "Luxor", value: "Luxor" },
+    { label: "Matruh", value: "Matruh" },
+    { label: "Minya", value: "Minya" },
+    { label: "Monufia", value: "Monufia" },
+    { label: "New Valley", value: "New Valley" },
+    { label: "North Sinai", value: "North Sinai" },
+    { label: "Port Said", value: "Port Said" },
+    { label: "Qalyubia", value: "Qalyubia" },
+    { label: "Qena", value: "Qena" },
+    { label: "Red Sea", value: "Red Sea" },
+    { label: "Sharqia", value: "Sharqia" },
+    { label: "Sohag", value: "Sohag" },
+    { label: "South Sinai", value: "South Sinai" },
+    { label: "Suez", value: "Suez" },
+  ];
+
+  const options = governorates;
+  const defaultOption = options[5];
 
   return (
     <div className={styles.form}>
@@ -107,14 +143,17 @@ function Profile() {
           <label className={styles.label} htmlFor="governorate">
             Governorate
           </label>
-          <input
+          <Select
+            options={governorates}
             value={governorate}
-            onChange={(e) => setGovernorate((prev) => e.target.value)}
-            className={styles.input}
-            type="text"
-            id="governorate"
-            name="governorate"
-            required
+            onChange={(e) => setGovernorate((prev) => e)}
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderRadius: "4px",
+                padding: "4.6px",
+              }),
+            }}
           />
         </div>
         <div className={`${styles.formGroup}`}>
