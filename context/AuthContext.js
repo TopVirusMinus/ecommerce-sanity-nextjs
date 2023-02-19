@@ -21,6 +21,7 @@ import { useRouter } from "next/router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { usersDTO } from "../lib/Dtos";
 
 const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
@@ -38,16 +39,19 @@ export const AuthContextProvider = ({ children }) => {
 
       const currentUserCheckRef = doc(db, "Users", signIn.user.uid);
       const docSnap = await getDoc(currentUserCheckRef);
-
-      if (docSnap.exists()) {
+      if (docSnap && docSnap.exists()) {
         console.log("Document data:", docSnap.data());
+        redirect && router.push(redirect);
       } else {
-        await setDoc(doc(usersRef, signIn.user.uid), {});
+        await setDoc(doc(db, "Users", signIn.user.uid), {
+          ...usersDTO,
+          email: signIn.user.email,
+        });
+        router.push("/profile");
         console.log("No such document!");
       }
 
       toast.success(`Logged In!`);
-      redirect && router.push(redirect);
     } catch (err) {
       toast.error(err.message);
     }
