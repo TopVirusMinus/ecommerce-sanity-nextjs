@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Product, FooterBanner, HeroBanner } from "../../components";
 import { client } from "../../lib/client";
 import Styles from "../styles/index.module.css";
+
 const Home = ({ allProducts, allBanners }) => {
   // console.log("allProducts ", allProducts);
   // console.log("allBanners ", allBanners);

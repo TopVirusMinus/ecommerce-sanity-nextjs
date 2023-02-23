@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -17,6 +18,8 @@ import Styles from "./Cart.module.css";
 
 const Cart = () => {
   const cartRef = useRef();
+  const router = useRouter();
+
   const {
     totalPrice,
     totalQuantities,
@@ -137,12 +140,16 @@ const Cart = () => {
                 <button
                   type="button"
                   className={Styles.btn}
-                  onClick={() => setShowCart(() => false)}
+                  onClick={() => {
+                    setShowCart(() => false);
+                    router.push("/checkout");
+                  }}
                 >
                   Pay On Delivery
                 </button>
               </Link>
               <button
+                disabled={true}
                 type="button"
                 className={Styles.btn}
                 onClick={handleCheckout}

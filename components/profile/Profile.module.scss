@@ -1,0 +1,86 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  align-items: center;
+  margin: 0 auto;
+  max-width: 500px;
+  width: 100%;
+
+  .dropdown {
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .country {
+    width: 100%;
+  }
+
+  .cityInfo,
+  .names {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .names {
+    .formGroup {
+      width: 45%;
+    }
+  }
+
+  .cityInfo {
+    .formGroup {
+      width: 30%;
+    }
+  }
+  .formGroup {
+    width: 100%;
+    margin: 0.4em 0;
+
+    .input {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      padding: 12px;
+      width: 100%;
+
+      &:focus {
+        border-color: #4d90fe;
+        box-shadow: 0 0 0 2px rgba(77, 144, 254, 0.2);
+        outline: none;
+      }
+    }
+  }
+
+  .button {
+    background-color: #4d90fe;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 12px 24px;
+    margin-top: 1em;
+
+    &:hover {
+      background-color: #357ae8;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(77, 144, 254, 0.2);
+      outline: none;
+    }
+  }
+}

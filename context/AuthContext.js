@@ -1,4 +1,10 @@
-import React, { useContext, createContext, useState, useEffect } from "react";
+import React, {
+  useContext,
+  createContext,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 import { auth } from "../config/firebase";
 import {
   signInWithPopup,
@@ -13,18 +19,43 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { collection, doc, setDoc, getDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
+import { usersDTO } from "../lib/Dtos";
 
 const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
-  const router = useRouter();
 
+  const router = useRouter();
+  let currentUserDB = {};
   const signIn = async (loginMethod, redirect) => {
     const provider = new loginMethod();
     try {
-      await signInWithPopup(auth, provider);
+      const signIn = await signInWithPopup(auth, provider);
+      //console.log(signIn.user.providerData[0].uid);
+      console.log(signIn.user.uid);
+
+      const currentUserCheckRef = doc(db, "Users", signIn.user.uid);
+      currentUserDB = await getDoc(currentUserCheckRef);
+      //console.log(`prePreUser ${JSON.stringify(currentUserDB)}`);
+      if (currentUserDB && currentUserDB.exists()) {
+        console.log("Document data:", currentUserDB.data());
+        redirect && router.push(redirect);
+      } else {
+        await setDoc(doc(db, "Users", signIn.user.uid), {
+          ...usersDTO,
+          email: signIn.user.email,
+          country: "EG",
+        });
+        router.push("/profile");
+        console.log("No such document!");
+      }
+
+      setUser((prev) => {
+        return { ...currentUserDB.data(), id: signIn.user.uid };
+      });
       toast.success(`Logged In!`);
-      redirect && router.push(redirect);
     } catch (err) {
       toast.error(err.message);
     }
@@ -69,8 +100,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser((prev) => currentUser);
-      //console.log(currentUser);
+      !currentUser && setUser((prev) => null);
     });
     return () => {
       unsubscribe();

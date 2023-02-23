@@ -13,8 +13,10 @@ import Styles from "./Navbar.module.css";
 import { UserAuth } from "../../context/AuthContext";
 const Navbar = () => {
   const { showCart, setShowCart, totalQuantities } = useStateContext();
-  const { logOut, user } = UserAuth();
-
+  try {
+    var { logOut, user } = UserAuth();
+  } catch {}
+  console.log(`USER: ${JSON.stringify(user)}`);
   const handleSignOut = async () => {
     try {
       await logOut();
@@ -23,6 +25,7 @@ const Navbar = () => {
     }
   };
 
+  console.log(`UID ${user?.uid}`);
   return (
     <div className={Styles.navbar_container}>
       <p className={Styles.logo}>
@@ -32,7 +35,7 @@ const Navbar = () => {
         <div className={Styles.dropdown}>
           <RiAccountCircleLine size={25} />
           <div className={Styles.dropdown_content}>
-            {!user?.displayName ? (
+            {!user ? (
               <Link href="/login" className={Styles.links}>
                 <BiLogIn />
                 <p>
@@ -40,9 +43,9 @@ const Navbar = () => {
                 </p>
               </Link>
             ) : (
-              <Link href="" className={Styles.links}>
-                <AiOutlineUser />
-                <p>{user.displayName.split(" ")[0]}</p>
+              <Link href="/profile" className={Styles.links}>
+                <AiOutlineUser style={{ cursor: "pointer" }} />
+                <p>Profile</p>
               </Link>
             )}
             <Link href="" className={Styles.links}>
